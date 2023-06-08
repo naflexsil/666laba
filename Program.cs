@@ -1,19 +1,20 @@
 ﻿
-            /**********************************
-            *                                 *
-            *        Стариковой Алины         *
-            *       "Делегаты, события"       *
-            *                                 *
-            **********************************/
+/**********************************
+*                                 *
+*        Стариковой Алины         *
+*       "Делегаты, события"       *
+*                                 *
+**********************************/
 
 using System;
 using System.Diagnostics;
+using static _666laba.Handlers;
 
 namespace laba666 {
     public class Program {
         static void Main(string[] args) {
             Console.WriteLine("\t\n||||||||||||| размер квадратной матрицы |||||||||||||");
-// М А Т Р И Ц А  3   
+// М А Т Р И Ц А    О Б Ъ Е Д И Н Е Н Н А Я    
             AboutMatrix MatrixA = new AboutMatrix();
             MatrixA.Size = Convert.ToInt32(Console.ReadLine());
             AboutMatrix MatrixB = new AboutMatrix();
@@ -29,29 +30,36 @@ namespace laba666 {
             Console.WriteLine(MatrixA.ToString());
             Console.WriteLine(MatrixB.ToString());
             Console.WriteLine("\n\n\n\t||||||||||||| что желаем? |||||||||||||");
-            Console.WriteLine("1)  сложить\n2)  вычесть\n3)  умножить\n4)  разделить\n5)  проверить на равность\n6)  сравнить на >\n7)  сравнить на <\n8)  сравнить на >=\n9)  сравнить на <=\n10) найти определитель\n11) обратную матрицу\n12) перейти к матричному калькулятору\n");
-                    }
+            Console.WriteLine("1)  сложить\n2)  вычесть\n3)  умножить\n4)  детерминант\n5)  инверсия\n6)  диагональная матрица\n7)  транспонирование\n8)  след матрицы\n\n");
 
-            void ConvertToDiagonal(AboutMatrix A) {
-                Action<AboutMatrix> convertDelegate = delegate (AboutMatrix matrix) {
-                    for (int Column = 0; Column < matrix.Size; ++Column) {
-                        for (int Row = 0; Row < matrix.Size; ++Row) {
-                            if (Column != Row)
-                                matrix.array[Column, Row] = 0;
-                        }
-                    }
-                };
-                A.ConvertToDiagonal(convertDelegate);
-                Console.WriteLine("\n\t! держи матрицу диагональную !");
-            }
+//З А П У С К    Ц Е П О Ч К И   О Б Я З А Н Н О С Т Е Й           
+            int Choice = int.Parse(Console.ReadLine());
+            Start Menu = new Start();
+            Menu.HandleStart(MatrixA, MatrixB, Choice); 
             Console.ReadKey();
         }
+
+        public static void ConvertToDiagonal(AboutMatrix A) {
+            Action<AboutMatrix> convertDelegate = delegate (AboutMatrix matrix) {
+                for (int IndexColumn = 0; IndexColumn < matrix.Size; ++IndexColumn) {
+                    for (int IndexRow = 0; IndexRow < matrix.Size; ++IndexRow) {
+                        if (IndexColumn != IndexRow)
+                            matrix.array[IndexColumn, IndexRow] = 0;
+                    }
+                }
+            };
+            A.ConvertToDiagonal(convertDelegate);
+            Console.WriteLine($"\n\t! держи матрицу диагональную !\n {A}");
+        }
+
         public class AboutMatrix {
             public int Size;
             public double[,] array = new double[10, 10];
             public void ConvertToDiagonal(Action<AboutMatrix> convertDelegate) {
                 convertDelegate(this);
             }
+
+
 // D E E P  C O P Y
             public AboutMatrix DeepCopy() {
                 AboutMatrix clone = (AboutMatrix)this.MemberwiseClone();
@@ -92,7 +100,7 @@ namespace laba666 {
                 }
             }
 // С Л О Ж Е Н И Е
-            public static AboutMatrix operator + (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator +(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         A.array[IndexColumn, IndexRow] = A.array[IndexColumn, IndexRow] + B.array[IndexColumn, IndexRow];
@@ -101,7 +109,7 @@ namespace laba666 {
                 return A;
             }
 // В Ы Ч И Т А Н И Е
-            public static AboutMatrix operator - (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator -(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         A.array[IndexColumn, IndexRow] = A.array[IndexColumn, IndexRow] - B.array[IndexColumn, IndexRow];
@@ -110,7 +118,7 @@ namespace laba666 {
                 return A;
             }
 // У М Н О Ж Е Н И Е 
-            public static AboutMatrix operator * (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator *(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int Index = 0; Index < A.Size; ++Index) {
                         for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
@@ -121,7 +129,7 @@ namespace laba666 {
                 return A;
             }
 // Д Е Л Е Н И Е
-            public static AboutMatrix operator / (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator /(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         try {
@@ -135,7 +143,7 @@ namespace laba666 {
                 return A;
             }
 // С Р А В Н Е Н И Я
-            public static bool operator == (AboutMatrix A, AboutMatrix B) {
+            public static bool operator ==(AboutMatrix A, AboutMatrix B) {
                 if (A.Size != B.Size) {
                     return true;
                 }
@@ -148,7 +156,7 @@ namespace laba666 {
                 }
                 return false;
             }
-            public static bool operator != (AboutMatrix A, AboutMatrix B) {
+            public static bool operator !=(AboutMatrix A, AboutMatrix B) {
                 if (A.Size != B.Size) {
                     return true;
                 }
@@ -161,7 +169,7 @@ namespace laba666 {
                 }
                 return false;
             }
-            public static AboutMatrix operator > (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator >(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         if (A.array[IndexColumn, IndexRow] > B.array[IndexColumn, IndexRow]) {
@@ -174,7 +182,7 @@ namespace laba666 {
                 }
                 return A;
             }
-            public static AboutMatrix operator < (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator <(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         if (A.array[IndexColumn, IndexRow] < B.array[IndexColumn, IndexRow]) {
@@ -187,7 +195,7 @@ namespace laba666 {
                 }
                 return A;
             }
-            public static AboutMatrix operator >= (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator >=(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         if (A.array[IndexColumn, IndexRow] >= B.array[IndexColumn, IndexRow]) {
@@ -200,7 +208,7 @@ namespace laba666 {
                 }
                 return A;
             }
-            public static AboutMatrix operator <= (AboutMatrix A, AboutMatrix B) {
+            public static AboutMatrix operator <=(AboutMatrix A, AboutMatrix B) {
                 for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                     for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
                         if (A.array[IndexColumn, IndexRow] <= B.array[IndexColumn, IndexRow]) {
@@ -244,20 +252,21 @@ namespace laba666 {
             private AboutMatrix SubMatrix(int Row, int Column) {
                 var subMatrix = new AboutMatrix();
                 int subRow = 0;
-                for (int IndexRow = 0; IndexRow < Size; ++IndexRow) {
+                for (int IndexRow = 0; Row < Size; ++Row) {
                     if (IndexRow == Row)
                         continue;
                     int subColumn = 0;
-                    for (int IndexColumn = 0; IndexColumn < Size; ++IndexColumn) {
+                    for (int IndexColumn = 0; Column < Size; ++Column) {
                         if (IndexColumn == Column)
                             continue;
-                        subMatrix.array[subColumn, subColumn] = array[IndexColumn, IndexColumn];
+                        subMatrix.array[subColumn, subColumn] = array[Column, Column];
                         ++subColumn;
                     }
                     ++subRow;
                 }
                 return subMatrix;
             }
+
 
 // И Н В Е Р С И Я
             public AboutMatrix Inverse(AboutMatrix A) {

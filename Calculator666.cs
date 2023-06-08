@@ -1,8 +1,9 @@
 ﻿using static laba666.Program;
 namespace laba666 {
+
     public static class Additions {
 
-// Т Р А Н С П О Р Т А Ц И Я (переворачивает матрицу по ее диагонали)
+// Т Р А Н С П О З И Ц И Я (переворачивает матрицу по ее диагонали)
         public static AboutMatrix MatrixTransposition(this AboutMatrix A) {
             for (int IndexColumn = 0; IndexColumn < A.Size; ++IndexColumn) {
                 for (int IndexRow = 0; IndexRow < A.Size; ++IndexRow) {
