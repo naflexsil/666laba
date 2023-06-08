@@ -30,57 +30,8 @@ namespace laba666 {
             Console.WriteLine(MatrixB.ToString());
             Console.WriteLine("\n\n\n\t||||||||||||| что желаем? |||||||||||||");
             Console.WriteLine("1)  сложить\n2)  вычесть\n3)  умножить\n4)  разделить\n5)  проверить на равность\n6)  сравнить на >\n7)  сравнить на <\n8)  сравнить на >=\n9)  сравнить на <=\n10) найти определитель\n11) обратную матрицу\n12) перейти к матричному калькулятору\n");
-            string choice = Console.ReadLine();
-            switch (choice) {
-                case "1":
-                    Console.WriteLine($" 1 матрица + 2 матрица \n{MatrixA + MatrixB}");
-                    break;
-                case "2":
-                    Console.WriteLine($" 1 матрица - 2 матрица \n{MatrixA - MatrixB}");
-                    break;
-                case "3":
-                    Console.WriteLine($" 1 матрица * 2 матрица \n{MatrixA * MatrixB}");
-                    break;
-                case "4":
-                    Console.WriteLine($" 1 матрица / 2 матрица \n{MatrixA / MatrixB}");
-                    break;
-                case "5":
-                    Console.WriteLine($" 1 матрица == 2 матрица: {MatrixA == MatrixB}");
-                    break;
-                case "6":
-                    Console.WriteLine($" 1 матрица > 2 матрица: {MatrixA > MatrixB}");
-                    break;
-                case "7":
-                    Console.WriteLine($" 1 матрица < 2 матрица: {MatrixA < MatrixB}");
-                    break;
-                case "8":
-                    Console.WriteLine($" 1 матрица >= 2 матрица: {MatrixA >= MatrixB}");
-                    break;
-                case "9":
-                    Console.WriteLine($" 1 матрица <= 2 матрица: {MatrixA <= MatrixB}");
-                    break;
-                case "10":
-                    Console.WriteLine($" детерминант матрицы 1: {MatrixA.Determ(MatrixA)}");
-                    break;
-                case "11": {
-                        var inverseA = MatrixA.Inverse(MatrixA);
-                        Console.WriteLine($" инверсия матрицы:\n{inverseA}");
-                        break;
                     }
 
-                case "12": {
-                        Console.Clear();
-                        Console.WriteLine($"||||||||||||| переход к матричному калькулятору |||||||||||||\n");
-                        var Transition = MatrixA.MatrixTransposition();
-                        Console.WriteLine("\n\t! транспонированная матрица !");
-                        Console.WriteLine(Transition);
-                        double trace = MatrixA.MatrixTrace();
-                        Console.WriteLine($"\n след матрицы = {trace}\n");
-                        ConvertToDiagonal(MatrixA);
-                        Console.WriteLine(MatrixA.ToString());
-                        break;
-                    }
-            }
             void ConvertToDiagonal(AboutMatrix A) {
                 Action<AboutMatrix> convertDelegate = delegate (AboutMatrix matrix) {
                     for (int Column = 0; Column < matrix.Size; ++Column) {
